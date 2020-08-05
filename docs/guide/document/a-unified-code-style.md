@@ -18,64 +18,89 @@ ESLint包含三个功能：
 ## 安装依赖
 
 ```shell
-$ npm install @vue/cli-plugin-eslint @vue/eslint-config-prettier eslint-plugin-prettier eslint-plugin-vue prettier eslint babel-eslint @vue/eslint-config-airbnb --save-dev
-```
-
-```json
-"devDependencies": {
-  "@vue/cli-plugin-eslint": "^4.1.0",
-  "@vue/eslint-config-airbnb": "^4.0.0",
-  "@vue/eslint-config-prettier": "^6.0.0",
-  "babel-eslint": "^10.0.3",
-  "eslint": "^5.16.0",
-  "eslint-plugin-prettier": "^3.1.3",
-  "eslint-plugin-vue": "^5.0.0",
-  "prettier": "^2.0.5",
-}
+$ yarn add -D eslint-config-prettier eslint-plugin-prettier prettier
 ```
 
 ## 修改配置文件
 
-以package.json为例，这是我自己写的一个简单配置，在package.json写入以下配置：
+在`.eslintr.js`中的`extends`属性里使用prettier插件：
 
 ```json
-"eslintConfig": {
-  "root": true,
-  "env": {
-    "node": true
+module.exports = {
+  root: true,
+  env: {
+    node: true
   },
-  "extends": [
-    "plugin:vue/essential",
-    "@vue/airbnb",
-    "plugin:prettier/recommended"
+  'extends': [
+    'plugin:vue/strongly-recommended',
+    '@vue/standard',
+    'plugin:prettier/recommended', // 这里使用prettier插件
   ],
-  "rules": {
-    "prettier/prettier": "error",
-    "no-console": 0,
-    "no-debugger": 0,
-    "comma-dangle": 0,
-    "indent": 0,
-    "operator-linebreak": 0,
-    "linebreak-style": [
-      0,
-      "error",
-      "windows"
-    ],
-    "max-len": [
-      "error",
+  rules: {
+    'no-console': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'generator-star-spacing': 'off',
+    'no-mixed-operators': 0,
+    'vue/max-attributes-per-line': [
+      5,
       {
-        "code": 500
+        'singleline': 5,
+        'multiline': {
+          'max': 1,
+          'allowFirstLine': false
+        }
       }
-    ]
+    ],
+    'vue/attribute-hyphenation': 0,
+    'vue/html-self-closing': 0,
+    'vue/component-name-in-template-casing': 0,
+    'vue/html-closing-bracket-spacing': 0,
+    'vue/singleline-html-element-content-newline': 0,
+    'vue/no-unused-components': 0,
+    'vue/multiline-html-element-content-newline': 0,
+    'vue/no-use-v-if-with-v-for': 0,
+    'vue/html-closing-bracket-newline': 0,
+    'vue/no-parsing-error': 0,
+    'no-tabs': 0,
+    'quotes': [
+      2,
+      'single',
+      {
+        'avoidEscape': true,
+        'allowTemplateLiterals': true
+      }
+    ],
+    'semi': [
+      2,
+      'never',
+      {
+        'beforeStatementContinuationChars': 'never'
+      }
+    ],
+    'no-delete-var': 2,
+    'prefer-const': [
+      2,
+      {
+        'ignoreReadBeforeAssign': false
+      }
+    ],
+    'template-curly-spacing': 'off',
+    'indent': 'off'
   },
-  "parserOptions": {
-    "parser": "babel-eslint"
-  }
-},
-"prettier": {
-  "singleQuote": true, // 使用单引号，默认为false双引号
-  "printWidth": 115, // 字符串换行阈值
-  "proseWrap": "always" // 是否换行
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        jest: true
+      }
+    }
+  ]
 }
 ```
 
@@ -123,6 +148,10 @@ $ npm install @vue/cli-plugin-eslint @vue/eslint-config-prettier eslint-plugin-p
      ![](https://figure-b.ricardolsw.com/image/KFNEeUd0SXFB9oY8J1ewiqbGxL6z0Wph.jpg?x-oss-process=style/watermark)
 
    - 最后点击Apply，OK
+
+## 使用
+
+我们可以手动使用编辑器的快捷键来格式化代码，也可以通过保存操作来自动格式化代码。
 
 ## 写在最后
 

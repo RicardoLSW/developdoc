@@ -39,3 +39,20 @@ $ cd electronic-receipt-system
 └── package.json
 ```
 
+## 本地开发
+
+安装依赖。
+
+```shell
+$ yarn install
+```
+
+> 如果网络情况不好，可以使用`cnpm`
+
+```shell
+$ yarn run serve
+```
+
+启动完成后会自动打开浏览器访问[http://localhost:8000](http://localhost:8000)。
+
+![fehelper-localhost-8000-user-login-1596588154057](https://figure-b.ricardolsw.com/image/fehelper-localhost-8000-user-login-1596588154057.png) 
