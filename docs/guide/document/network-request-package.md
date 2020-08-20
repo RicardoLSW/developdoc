@@ -163,3 +163,24 @@ export function exportAction(url, parameter) {
 }
 ```
 
+## 如何使用
+
+在src/api目录下新建api.js文件用于存放接口地址：
+
+```javascript
+// eslint-disable-next-line
+import { getAction } from '@/api/manage'
+
+const getReceiptTotal = (params) => getAction('/receipt-total', params) // 工作台-数据
+
+export { getReceiptTotal }
+```
+
+然后我们可以直接在页面使用：
+
+```javascript
+getReceiptTotal().then((res) => {
+  console.log(res)
+})
+```
+

@@ -18,7 +18,7 @@
      {
        path: '/',
        name: 'index',
-       component: BasicLayout,
+       component: BasicLayout, 
        meta: { title: '首页' },
        redirect: '/work-space',
        children: [],
@@ -54,6 +54,126 @@
 2. 移除views文件夹多余页面，仅保留下图这些文件：
 
    ![image-20200809154628403](https://figure-b.ricardolsw.com/image/image-20200809154628403.png)
+
+## 创建工作台页面Mock
+
+在`src/mock/services`目录下面创建`workSpace.js`用来模拟mock数据：
+
+```javascript
+import Mock from 'mockjs2'
+import { builder } from '../util'
+
+// 工作台-数据
+const receiptTotal = () => {
+  return builder({
+    lastWeekCount: Mock.mock('@integer(1, 999)'),
+    lastWeekReceiptMoney: Mock.mock('@integer(1, 999999)'),
+    todayCount: Mock.mock('@integer(1, 99)'),
+    todayReceiptMoney: Mock.mock('@integer(1, 999999)'),
+    assigneeNum: Mock.mock('@integer(1, 99)'),
+  })
+}
+
+// 饼图数据
+const receiptTypePercentage = () => {
+  const count = 5
+  const finRcptTypeDetailVoList = new Array(count)
+  const receiptTotalMoney = Mock.mock('@integer(1, 999999)')
+  for (let i = 0; i < count; i++) {
+    finRcptTypeDetailVoList[i] = {
+      receiptMoney: Mock.mock('@integer(1, 99999)'),
+      receiptPct: Mock.mock('@float(1, 99, 2, 2)') + '%',
+      receiptTypeMeaning: Mock.mock('@csentence(5)'),
+    }
+  }
+  return builder({
+    finRcptTypeDetailVoList,
+    receiptTotalMoney,
+  })
+}
+
+// 折线图数据
+const receiptMonthCount = () => {
+  const count = 31
+  const thisMonth = new Array(count)
+  const lastMonth = new Array(count)
+  for (let i = 0; i < count; i++) {
+    thisMonth[i] = {
+      count: Mock.mock('@integer(1, 99)'),
+      day: `2020/08/${i < 9 ? '0' + (i + 1) : i + 1}`,
+      type: '本月',
+    }
+    lastMonth[i] = {
+      count: Mock.mock('@integer(1, 99)'),
+      day: `2020/08/${i < 9 ? '0' + (i + 1) : i + 1}`,
+      type: '上月',
+    }
+  }
+  return builder({
+    finRcptMonthTotalVo: {
+      lastMouthRcptCount: Mock.mock('@integer(1, 99)'),
+      lastMouthRcptMoney: Mock.mock('@integer(1, 99999)'),
+      rcptCountFlag: 'DOWN',
+      rcptMoneyFlag: 'DOWN',
+      receiptType: 'PREPAID',
+      receiptTypeMeaning: '预付款',
+      thisMouthMoneyPct: '0.00%',
+      thisMouthOrderPct: '0.00%',
+      thisMouthRcptCount: Mock.mock('@integer(1, 99)'),
+      thisMouthRcptMoney: Mock.mock('@integer(1, 99)'),
+    },
+    finRcptMonthDetailVoList: thisMonth.concat(lastMonth),
+  })
+}
+
+Mock.mock(/\/receipt-total/, 'get', receiptTotal)
+Mock.mock(/\/receipt-type-percentage/, 'get', receiptTypePercentage)
+Mock.mock(/\/receipt-month-count/, 'get', receiptMonthCount)
+```
+
+在src/mock/index.js引入该mock：
+
+```javascript
+import { isIE } from '@/utils/util'
+
+// 判断环境不是 prod 或者 preview 是 true 时，加载 mock 服务
+if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
+  if (isIE()) {
+    console.error('[antd-pro] ERROR: `mockjs` NOT SUPPORT `IE` PLEASE DO NOT USE IN `production` ENV.')
+  }
+  // 使用同步加载依赖
+  // 防止 vuex 中的 GetInfo 早于 mock 运行，导致无法 mock 请求返回结果
+  console.log('[antd-pro] mock mounting')
+  const Mock = require('mockjs2')
+  require('./services/auth')
+  require('./services/user')
+  require('./services/manage')
+  require('./services/other')
+  require('./services/tagCloud')
+  require('./services/article')
+  require('./services/workSpace') // 引入工作台Mock
+
+  Mock.setup({
+    timeout: 800, // setter delay time
+  })
+  console.log('[antd-pro] mock mounted')
+}
+```
+
+## 通过axios使用Mock
+
+在`src/api/api.js`里像调用接口一样调用我们的mock：
+
+```javascript
+// eslint-disable-next-line
+import { getAction } from '@/api/manage'
+
+const getReceiptTotal = (params) => getAction('/receipt-total', params) // 工作台-数据
+const getReceiptTypePercentage = (params) => getAction('/receipt-type-percentage', params) // 工作台-收据类别占比
+const getReceiptMonthCount = (params) => getAction('/receipt-month-count', params) // 工作台-查询收据单本月统计数据
+
+export { getReceiptTotal, getReceiptTypePercentage, getReceiptMonthCount }
+```
 
 ## 创建工作台页面
 
@@ -141,13 +261,6 @@
     <a-row :gutter="24">
       <a-col :span="12">
         <a-card title="收据统计" :bordered="false">
-          <div style="width: 200px; position: absolute; right: 20px; top: 12px;">
-            <a-select placeholder="" @change="handleChange" style="width: 100%;" default-value="PREPAID">
-              <a-select-option v-for="(item, index) in receiptTypeList" :value="item.receiptType" :key="index">{{
-                item.receiptTypeMeaning
-              }}</a-select-option>
-            </a-select>
-          </div>
           <div>
             <div class="flex-row-space-around">
               <div style="flex: 1;">
@@ -202,7 +315,7 @@
       </a-col>
       <a-col :span="12">
         <a-card title="收据类别占比" :bordered="false">
-          <a-radio-group default-value="LAST_SEVEN_DAY" style="margin-bottom: 16px;" @change="pieChange">
+          <a-radio-group default-value="LAST_SEVEN_DAY" style="margin-bottom: 16px;">
             <a-radio-button value="LAST_SEVEN_DAY">
               近七天
             </a-radio-button>
@@ -246,6 +359,7 @@
 import DataSet from '@antv/data-set'
 import { mapGetters } from 'vuex'
 import { baseMixin } from '@/store/app-mixin'
+import { getReceiptTotal, getReceiptTypePercentage, getReceiptMonthCount } from '@/api/api'
 
 export default {
   name: 'WorkSpace',
@@ -290,7 +404,6 @@ export default {
       lastWeekReceiptMoney: null, // 近七天收据总额
       todayCount: null, // 今日收据总数
       todayReceiptMoney: null, // 今日收据总额
-      receiptTypeList: [], // 收据类型
       thisMouthRcptCount: null, // 本月预付款收据总数
       thisMouthRcptMoney: null, // 本月预付款收据总额
       thisMouthOrderPct: null, // 本月预付款收据总数-百分比
@@ -305,6 +418,31 @@ export default {
   mounted() {
     const { userInfo } = this
     console.log(userInfo())
+    getReceiptTypePercentage().then((res) => {
+      this.receiptCategoryAccountedFor = res.result.finRcptTypeDetailVoList
+      this.receiptCategoryAccountedFor.forEach((e) => {
+        e.receiptPct = Number(e.receiptPct.split('%')[0])
+      })
+      this.receiptTotalMoney = res.result.receiptTotalMoney
+      this.initPieChart(this.receiptCategoryAccountedFor)
+    })
+    getReceiptTotal().then((res) => {
+      this.lastWeekCount = res.result.lastWeekCount
+      this.lastWeekReceiptMoney = res.result.lastWeekReceiptMoney
+      this.todayCount = res.result.todayCount
+      this.todayReceiptMoney = res.result.todayReceiptMoney
+      this.assigneeNum = res.result.assigneeNum
+    })
+    getReceiptMonthCount().then((res) => {
+      this.thisMouthRcptCount = res.result.finRcptMonthTotalVo.thisMouthRcptCount
+      this.thisMouthRcptMoney = res.result.finRcptMonthTotalVo.thisMouthRcptMoney
+      this.thisMouthOrderPct = res.result.finRcptMonthTotalVo.thisMouthOrderPct
+      this.thisMouthMoneyPct = res.result.finRcptMonthTotalVo.thisMouthMoneyPct
+      this.rcptMoneyFlag = res.result.finRcptMonthTotalVo.rcptMoneyFlag
+      this.rcptCountFlag = res.result.finRcptMonthTotalVo.rcptCountFlag
+      this.dataStatisticsData = res.result.finRcptMonthDetailVoList
+      this.initLineChart(this.dataStatisticsData)
+    })
   },
   methods: {
     ...mapGetters(['userInfo']),
@@ -398,23 +536,11 @@ export default {
               </tr>`
     },
     /**
-     * 切换饼图
-     * @param e
-     */
-    pieChange(e) {},
-    /**
      * 常用功能跳转
      * @param value
      */
     toPage(value) {
       this.$router.push({ name: value })
-    },
-    /**
-     * 切换折线图
-     * @param value
-     */
-    handleChange(value) {
-      this.receiptTypeMeaning = this.receiptTypeList.filter((e) => e.receiptType === value)[0].receiptTypeMeaning
     },
   },
 }
@@ -494,4 +620,8 @@ export const asyncRouterMap = [
   },
 ]
 ```
+
+## 页面效果
+
+![fehelper-localhost-8000-work-space-1597900557081](https://figure-b.ricardolsw.com/image/fehelper-localhost-8000-work-space-1597900557081.png)
 
