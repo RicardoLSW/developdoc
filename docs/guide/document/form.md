@@ -33,6 +33,13 @@ const lookupValue = (options) => {
           '[{"payType":"WEIXIN","payTypeMeaning":"微信支付"},{"payType":"CASH","payTypeMeaning":"现金支付"},{"payType":"BANK","payTypeMeaning":"银行转账"}]'
         )
       )
+    // 收据状态
+    case 'FIN_PAY_RECEIPT_STATUS_CODE':
+      return builder(
+        JSON.parse(
+          '[{"receiptStatus":"TO_APPROVE","receiptStatusMeaning":"待审核"},{"receiptStatus":"REJECTED","receiptStatusMeaning":"已退回"},{"receiptStatus":"CANCEL","receiptStatusMeaning":"已作废"},{"receiptStatus":"TO_PAY","receiptStatusMeaning":"待付款"},{"receiptStatus":"COMPLETED","receiptStatusMeaning":"已完成"},{"receiptStatus":"BOOKED","receiptStatusMeaning":"已记账"},{"receiptStatus":"NOT_TRANSFER","receiptStatusMeaning":"未转账"},{"receiptStatus":"TRANSFERRED","receiptStatusMeaning":"已转账"}]'
+        )
+      )
     default:
       return null
   }
