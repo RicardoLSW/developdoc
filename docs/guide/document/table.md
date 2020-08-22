@@ -1,4 +1,4 @@
-# 收据审核、查询、打印、收款表格页面
+# 收据审核、查询、打印、收款页面
 
 ## 收据列表Mock
 
@@ -80,7 +80,7 @@ esport { getFinReceiptOrder }
 
 
 
-## 创建审核、查询、打印、收款表格页面
+## 创建审核、查询、打印、收款页面
 
 目录如下图：
 
@@ -88,7 +88,9 @@ esport { getFinReceiptOrder }
 
 
 
-### 审核页面：ReceiptAudit.vue
+### 审核页面
+
+ReceiptAudit.vue
 
 ```vue
 <script src="../../mock/services/common.js"></script>
@@ -395,7 +397,9 @@ export default {
 <style scoped></style>
 ```
 
-### 收款页面：ReceiptPayment.vue
+### 收款页面
+
+ReceiptPayment.vue
 
 ```vue
 <template>
@@ -627,7 +631,9 @@ export default {
 <style scoped></style>
 ```
 
-### 打印页面：ReceiptPrintList.vue
+### 打印页面
+
+ReceiptPrintList.vue
 
 ```vue
 <template>
@@ -852,7 +858,9 @@ export default {
 <style scoped></style>
 ```
 
-### 查询页面：ReceiptTheQuery.vue
+### 查询页面
+
+ReceiptTheQuery.vue
 
 ```vue
 <template>
