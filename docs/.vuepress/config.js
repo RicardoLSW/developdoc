@@ -35,7 +35,7 @@ module.exports = {
                         'document/form',
                         'document/table',
                         'document/third-party-relies-on',
-                        'document/single-sign-on-(sso)',
+                        // 'document/single-sign-on-(sso)',
                         'document/routing-menu-permissions',
                     ]
                 }
