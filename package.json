@@ -4,7 +4,7 @@
   "description": "前端开发规范&文档",
   "main": "index.js",
   "scripts": {
-    "docs:dev": "vuepress dev docs",
+    "docs:dev": "vuepress dev docs --open",
     "docs:build": "vuepress build docs"
   },
   "author": "RicardoLSW",

@@ -180,7 +180,7 @@ Vue.filter('localDay', function (dataStr, pattern = 'LL') {
           >收据</span
         >
       </div>
-      <a-button type="primary" @click="print" v-action:print>收据打印</a-button>
+      <a-button type="primary" @click="print">收据打印</a-button>
     </div>
     <div class="flex-column" style="justify-content: center; align-items: center; padding: 24px;">
       <div id="print-box">

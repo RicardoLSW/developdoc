@@ -239,12 +239,11 @@ export { getReceiptTotal, getReceiptTypePercentage, getReceiptMonthCount }
     <a-row style="margin: 20px 0;">
       <a-card title="常用功能" :bordered="false">
         <div class="flex-row-space-around commonly-used-functions">
-          <div class="common-item" @click="toPage('receiptIssued')" v-action:receiptIssued>收据开具</div>
+          <div class="common-item" @click="toPage('receiptIssued')">收据开具</div>
           <div
             class="common-item"
             style="display: flex; justify-content: space-between;"
             @click="toPage('receiptAudit')"
-            v-action:receiptAudit
           >
             <span>收据审核</span>
             <a
@@ -252,9 +251,9 @@ export { getReceiptTotal, getReceiptTypePercentage, getReceiptMonthCount }
               >)</a
             >
           </div>
-          <div class="common-item" @click="toPage('receiptCollection')" v-action:receiptCollection>收据收款</div>
-          <div class="common-item" @click="toPage('receiptQuery')" v-action:receiptQuery>收据查询</div>
-          <div class="common-item" @click="toPage('receiptPrintList')" v-action:receiptPrintList>收据打印</div>
+          <div class="common-item" @click="toPage('receiptCollection')">收据收款</div>
+          <div class="common-item" @click="toPage('receiptQuery')">收据查询</div>
+          <div class="common-item" @click="toPage('receiptPrintList')">收据打印</div>
         </div>
       </a-card>
     </a-row>

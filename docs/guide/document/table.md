@@ -637,219 +637,225 @@ ReceiptPrintList.vue
 
 ```vue
 <template>
-  <div>
-    <a-card :bordered="false">
-      <div class="table-page-search-wrapper">
-        <a-form layout="inline">
-          <a-row :gutter="48">
-            <a-col :md="8" :sm="24">
-              <a-form-item label="收据编号">
-                <a-input placeholder="" v-model="queryParam.receiptNo" />
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="收据类型">
-                <a-select placeholder="" mode="multiple" v-model="receiptType" :allowClear="true">
-                  <a-select-option v-for="(item, index) in receiptTypeList" :value="item.receiptType" :key="index">{{
-                    item.receiptTypeMeaning
-                  }}</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="支付方式">
-                <a-select placeholder="" v-model="queryParam.payType">
-                  <a-select-option v-for="(item, index) in payTypeList" :value="item.payType" :key="index">{{
-                    item.payTypeMeaning
-                  }}</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="24" :sm="24">
-              <span class="table-page-search-submitButtons" style="float: right; overflow: hidden;">
-                <a-button
-                  @click="
-                    () => {
-                      receiptType = []
-                      queryParam.receiptNo = null
-                      queryParam.receiptType = null
-                      queryParam.payType = null
-                      $refs.table.refresh(true)
-                    }
-                  "
-                  >重置</a-button
-                >
-                <a-button type="primary" style="margin-left: 8px;" @click="$refs.table.refresh(true)">查询</a-button>
-              </span>
-            </a-col>
-          </a-row>
-        </a-form>
+  <a-card :bordered="false">
+    <div class="flex-row" style="justify-content: space-between; align-items: center;">
+      <div class="flex-row" style="align-items: center;">
+        <a-avatar shape="square" :size="16" :src="icon[0]" />
+        <span
+          style="
+            color: rgba(0, 0, 0, 0.847058823529412);
+            font-size: 16px;
+            font-family: 'PingFangSC-Regular', 'PingFang SC';
+            font-weight: 400;
+            margin-left: 5px;
+          "
+          >收据</span
+        >
       </div>
-    </a-card>
-    <a-card title="收据列表" style="margin-top: 24px;" :bordered="false">
-      <a-alert :showIcon="true" style="margin-bottom: 16px;">
-        <template slot="message">
-          <span style="margin-right: 12px;">
-            已选择: <a style="font-weight: 600;">{{ this.selectedRows.length }}</a>
-          </span>
-          <a style="margin-left: 24px;" @click="btnClick">批量打印</a>
-        </template>
-      </a-alert>
-      <s-table
-        ref="table"
-        size="default"
-        rowKey="id"
-        :columns="columns"
-        :data="loadData"
-        showPagination="auto"
-        :rowSelection="options.rowSelection"
-      >
-        <template slot="index" slot-scope="text, record, index">
-          <span>{{ index + 1 + (queryParam.pageNo - 1) * queryParam.pageSize }}</span>
-        </template>
-        <span slot="receiptNo" slot-scope="text">
-          <ellipsis :length="24" tooltip>{{ text }}</ellipsis>
-        </span>
-        <span slot="receiptTypeMeaning" slot-scope="text">
-          <ellipsis :length="24" tooltip>{{ text }}</ellipsis>
-        </span>
-        <span slot="receiptMoney" slot-scope="text">
-          <ellipsis :length="24" tooltip>{{ text }}</ellipsis>
-        </span>
-        <span slot="payTypeMeaning" slot-scope="text">
-          <ellipsis :length="18" tooltip>{{ text }}</ellipsis>
-        </span>
-        <span slot="submitDate" slot-scope="text">
-          <ellipsis :length="24" tooltip>{{ text }}</ellipsis>
-        </span>
-        <span slot="payer" slot-scope="text">
-          <ellipsis :length="24" tooltip>{{ text }}</ellipsis>
-        </span>
-        <span slot="receiptStatusMeaning" slot-scope="text">
-          <ellipsis :length="24" tooltip>{{ text }}</ellipsis>
-        </span>
-        <span slot="action" slot-scope="text, record">
-          <template>
-            <a @click="toPage(record)" v-action:print>打印收据</a>
-          </template>
-        </span>
-      </s-table>
-    </a-card>
-  </div>
+      <a-button type="primary" @click="print">收据打印</a-button>
+    </div>
+    <div class="flex-column" style="justify-content: center; align-items: center; padding: 24px;">
+      <div id="print-box">
+        <div id="receipt">
+          <div style="width: 1000px; height: 410px; background: #fccce7;">
+            <div class="flex-row" style="justify-content: center; align-items: center; position: relative;">
+              <div style="padding-bottom: 3px; border-bottom: 1px solid black;">
+                <div style="font-size: 32px; padding: 5px 64px; text-align: center; border-bottom: 1px solid black;">
+                  收<span style="margin: 0px 24px;"></span>据
+                </div>
+              </div>
+              <div style="position: absolute; right: 50px; font-size: 32px; bottom: 0px;">
+                NQ<span style="color: #0c47c0;">{{ infoData.receiptNo }}</span>
+              </div>
+            </div>
+            <div class="flex-row" style="padding: 20px 30px 0px; font-size: 18px; position: relative;">
+              <div>单位：XXXXXX有限公司</div>
+              <div style="position: absolute; right: 250px;">{{ infoData.submitDate | localDay }}</div>
+            </div>
+            <div
+              class="flex-column"
+              style="
+                margin: 10px;
+                border: 1.2px solid black;
+                height: 230px;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 18px;
+                font-weight: 400;
+                position: relative;
+              "
+            >
+              <div class="flex-row" style="width: 100%; padding: 20px 10px;">
+                <div class="flex-row">
+                  <span>付款单位</span>
+                  <div style="width: 400px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.payer }}
+                  </div>
+                </div>
+                <div class="flex-row">
+                  <span>付款方式</span>
+                  <div style="width: 394px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.payTypeMeaning }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row" style="width: 100%; padding: 20px 10px;">
+                <div class="flex-row">
+                  <span>人民币（大写）</span>
+                  <div style="width: 400px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.receiptMoneyCapital }}
+                  </div>
+                </div>
+                <div class="flex-row">
+                  <span>¥</span>
+                  <div style="width: 400px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.receiptMoney }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row" style="width: 100%; padding: 20px 10px;">
+                <span>系付</span>
+                <div style="width: 900px; border-bottom: 1px solid black; padding: 0 20px;">
+                  {{ infoData.receiptTypeMeaning }}，{{ infoData.receiptDesc }}
+                </div>
+              </div>
+              <div
+                style="
+                  position: absolute;
+                  right: 10px;
+                  width: 20px;
+                  margin: 0 auto;
+                  line-height: 24px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                "
+              >
+                客户联
+              </div>
+            </div>
+            <div class="flex-row-space-around" style="font-size: 18px; padding: 0px 30px;">
+              <div>单位公章：</div>
+              <div>复核人：</div>
+              <div>收款人：</div>
+              <div>制单：李</div>
+            </div>
+          </div>
+          <div style="width: 1000px; height: 410px; background: #fccce7; margin-top: 50px;">
+            <div class="flex-row" style="justify-content: center; align-items: center; position: relative;">
+              <div style="padding-bottom: 3px; border-bottom: 1px solid black;">
+                <div style="font-size: 32px; padding: 5px 64px; text-align: center; border-bottom: 1px solid black;">
+                  收<span style="margin: 0px 24px;"></span>据
+                </div>
+              </div>
+              <div style="position: absolute; right: 50px; font-size: 32px; bottom: 0px;">
+                NQ<span style="color: #0c47c0;">{{ infoData.receiptNo }}</span>
+              </div>
+            </div>
+            <div class="flex-row" style="padding: 20px 30px 0px; font-size: 18px; position: relative;">
+              <div>单位：XXXXXX有限公司</div>
+              <div style="position: absolute; right: 250px;">{{ infoData.submitDate | localDay }}</div>
+            </div>
+            <div
+              class="flex-column"
+              style="
+                margin: 10px;
+                border: 1.2px solid black;
+                height: 230px;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 18px;
+                font-weight: 400;
+                position: relative;
+              "
+            >
+              <div class="flex-row" style="width: 100%; padding: 20px 10px;">
+                <div class="flex-row">
+                  <span>付款单位</span>
+                  <div style="width: 400px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.payer }}
+                  </div>
+                </div>
+                <div class="flex-row">
+                  <span>付款方式</span>
+                  <div style="width: 394px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.payTypeMeaning }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row" style="width: 100%; padding: 20px 10px;">
+                <div class="flex-row">
+                  <span>人民币（大写）</span>
+                  <div style="width: 400px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.receiptMoneyCapital }}
+                  </div>
+                </div>
+                <div class="flex-row">
+                  <span>¥</span>
+                  <div style="width: 400px; border-bottom: 1px solid black; padding: 0 20px;">
+                    {{ infoData.receiptMoney }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row" style="width: 100%; padding: 20px 10px;">
+                <span>系付</span>
+                <div style="width: 900px; border-bottom: 1px solid black; padding: 0 20px;">
+                  {{ infoData.receiptTypeMeaning }}，{{ infoData.receiptDesc }}
+                </div>
+              </div>
+              <div
+                style="
+                  position: absolute;
+                  right: 10px;
+                  width: 20px;
+                  margin: 0 auto;
+                  line-height: 24px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                "
+              >
+                记账联
+              </div>
+            </div>
+            <div class="flex-row-space-around" style="font-size: 18px; padding: 0px 30px;">
+              <div>单位公章：</div>
+              <div>复核人：</div>
+              <div>收款人：</div>
+              <div>制单：李</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a-card>
 </template>
 
 <script>
-import { STable, Ellipsis } from '@/components'
-import { getFinReceiptOrder, keyValueList } from '@/api/api'
+import { exportPDF, toCanvas } from '@/utils/util'
+import { getFinReceiptOrderDetail } from '@/api/api'
 
 export default {
-  name: 'ReceiptPrintList',
-  components: {
-    STable,
-    Ellipsis,
-  },
+  name: 'ReceiptPrint',
   data() {
     return {
-      receiptType: [],
-      // 查询参数
-      queryParam: {
-        receiptNo: null, // 收据编号
-        receiptType: null, // 收据类型
-        receiptStatus: null, // 收据状态
-        payType: null, // 支付方式
-        queryType: 'PRINT',
-      },
-      columns: [
-        { title: '序号', dataIndex: 'index', width: 60, align: 'center', scopedSlots: { customRender: 'index' } },
-        {
-          title: '收据编号',
-          dataIndex: 'receiptNo',
-          scopedSlots: { customRender: 'receiptNo' },
-        },
-        {
-          title: '收据类型',
-          dataIndex: 'receiptTypeMeaning',
-          scopedSlots: { customRender: 'receiptTypeMeaning' },
-        },
-        {
-          title: '收据金额',
-          dataIndex: 'receiptMoney',
-          scopedSlots: { customRender: 'receiptMoney' },
-        },
-        {
-          title: '付款方式',
-          dataIndex: 'payTypeMeaning',
-          scopedSlots: { customRender: 'payTypeMeaning' },
-        },
-        {
-          title: '提交时间',
-          dataIndex: 'submitDate',
-          scopedSlots: { customRender: 'submitDate' },
-        },
-        {
-          title: '付款单位 ',
-          dataIndex: 'payer',
-          scopedSlots: { customRender: 'payer' },
-        },
-        {
-          title: '收据状态',
-          dataIndex: 'receiptStatusMeaning',
-          scopedSlots: { customRender: 'receiptStatusMeaning' },
-        },
-        {
-          title: '操作',
-          dataIndex: 'action',
-          width: 150,
-          scopedSlots: { customRender: 'action' },
-        },
-      ],
-      loadData: (parameter) => {
-        this.queryParam.receiptType = this.receiptType.length ? this.receiptType.join(',') : null
-        return getFinReceiptOrder(Object.assign(this.queryParam, parameter)).then((res) => {
-          return {
-            data: res.result.data,
-            pageNo: parameter.pageNo,
-            pageSize: parameter.pageSize,
-            totalCount: res.result.totalCount,
-          }
-        })
-      },
-      receiptTypeList: [],
-      receiptStatusList: [],
-      payTypeList: [],
-      options: {
-        rowSelection: {
-          onChange: this.onSelectChange,
-        },
-      },
-      selectedRowKeys: [],
-      selectedRows: [],
+      icon: [require('@/assets/icons/u692.png')],
+      infoData: {},
     }
   },
   mounted() {
-    keyValueList({ type: 'FIN_PAY_RECEIPT_TYPE' }).then((res) => (this.receiptTypeList = res.result))
-
-    keyValueList({ type: 'FIN_PAY_RECEIPT_STATUS_CODE' }).then((res) => (this.receiptStatusList = res.result))
-
-    keyValueList({ type: 'FIN_PAY_RECEIPT_PAY_TYPE' }).then((res) => (this.payTypeList = res.result))
+    if (this.$route.query.receiptNo) {
+      getFinReceiptOrderDetail(this.$route.query.receiptNo).then((res) => {
+        if (['TO_PAY', 'NOT_TRANSFER', 'TRANSFERRED'].includes(res.result.receiptStatus)) {
+          this.infoData = res.result
+          setTimeout(() => {
+            toCanvas('print-box', 'receipt', 1)
+          }, 0)
+        }
+      })
+    }
   },
   methods: {
-    toPage(record) {
-      this.$router.push({ name: 'receiptPrint', query: { receiptNo: record.receiptNo } })
-    },
-    onSelectChange(selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
-    },
-    btnClick() {
-      if (this.selectedRows.length) {
-        window.open(`/print?receiptNo=${this.selectedRows.map((e) => e.receiptNo).join('-')}`)
-      } else {
-        this.$notification.warning({
-          message: '警告',
-          description: '最少需要选择一条数据',
-        })
-      }
+    print() {
+      exportPDF('receipt', 'receipt')
     },
   },
 }
@@ -937,7 +943,7 @@ ReceiptTheQuery.vue
       </div>
     </a-card>
     <a-card title="收据列表" style="margin-top: 24px;" :bordered="false">
-      <a-alert :showIcon="true" style="margin-bottom: 16px;" v-action:tally>
+      <a-alert :showIcon="true" style="margin-bottom: 16px;">
         <template slot="message">
           <span style="margin-right: 12px;">
             已选择: <a style="font-weight: 600;">{{ this.selectedRows.length }}</a>
