@@ -25,6 +25,7 @@ module.exports = {
                     title: 'Vue从零开始',
                     collapsable: false,
                     children: [
+                        'document/introduction',
                         'document/front-end-environment-set-up',
                         'document/code-structure',
                         'document/a-unified-code-style',
