@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: 12
     - run: npm install
-    - run: find docs/.vuepress -name /config.js | xargs sed -i 's/\/developdoc\//\//g'
+    - run: find docs/.vuepress -name "config" | xargs sed -i 's/\/developdoc\//\//g'
     - run: nl docs/.vuepress/config.js
     - run: npm run docs:build
 
