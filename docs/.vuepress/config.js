@@ -5,7 +5,7 @@ module.exports = {
         ['link', { rel: 'icon', href: '/favicon.ico' }],
     ],
     // theme: '@vuepress/vue',
-    base: '/developdoc/',
+    base: process.env.VUE_APP_API_BASE,
     markdown: {
         lineNumbers: false
     },
