@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>全局状态管理 | 前端开发规范&amp;文档</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/developdoc/favicon.ico">
+    <meta name="description" content="前端开发规范&文档">
+    <link rel="preload" href="/developdoc/assets/css/0.styles.ef384e93.css" as="style"><link rel="preload" href="/developdoc/assets/js/app.5523110c.js" as="script"><link rel="preload" href="/developdoc/assets/js/2.823e1717.js" as="script"><link rel="preload" href="/developdoc/assets/js/11.7a1931d6.js" as="script"><link rel="prefetch" href="/developdoc/assets/js/10.71768a4f.js"><link rel="prefetch" href="/developdoc/assets/js/12.a1c29299.js"><link rel="prefetch" href="/developdoc/assets/js/13.6ce9e98e.js"><link rel="prefetch" href="/developdoc/assets/js/14.beeb2d7e.js"><link rel="prefetch" href="/developdoc/assets/js/15.3b17ec5e.js"><link rel="prefetch" href="/developdoc/assets/js/16.7736a91a.js"><link rel="prefetch" href="/developdoc/assets/js/17.0c57e85c.js"><link rel="prefetch" href="/developdoc/assets/js/18.22cd0e18.js"><link rel="prefetch" href="/developdoc/assets/js/19.7c120dfa.js"><link rel="prefetch" href="/developdoc/assets/js/3.1f893780.js"><link rel="prefetch" href="/developdoc/assets/js/4.9feeae3b.js"><link rel="prefetch" href="/developdoc/assets/js/5.fb165bb9.js"><link rel="prefetch" href="/developdoc/assets/js/6.1f79d78a.js"><link rel="prefetch" href="/developdoc/assets/js/7.a5ca490e.js"><link rel="prefetch" href="/developdoc/assets/js/8.fdb64087.js"><link rel="prefetch" href="/developdoc/assets/js/9.7c267cf6.js">
+    <link rel="stylesheet" href="/developdoc/assets/css/0.styles.ef384e93.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/developdoc/" class="home-link router-link-active"><!----> <span class="site-name">前端开发规范&amp;文档</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>开发规范</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/developdoc/guide/specification/" class="sidebar-link">介绍</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Vue从零开始</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/developdoc/guide/document/introduction.html" class="sidebar-link">介绍</a></li><li><a href="/developdoc/guide/document/front-end-environment-set-up.html" class="sidebar-link">前端环境搭建</a></li><li><a href="/developdoc/guide/document/code-structure.html" class="sidebar-link">代码结构</a></li><li><a href="/developdoc/guide/document/a-unified-code-style.html" class="sidebar-link">统一代码风格</a></li><li><a href="/developdoc/guide/document/many-environment-configuration.html" class="sidebar-link">多环境配置</a></li><li><a href="/developdoc/guide/document/global-state-management.html" aria-current="page" class="active sidebar-link">全局状态管理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/developdoc/guide/document/global-state-management.html#全局样式" class="sidebar-link">全局样式</a></li><li class="sidebar-sub-header"><a href="/developdoc/guide/document/global-state-management.html#工具类" class="sidebar-link">工具类</a></li></ul></li><li><a href="/developdoc/guide/document/network-request-package.html" class="sidebar-link">网络请求封装</a></li><li><a href="/developdoc/guide/document/chart.html" class="sidebar-link">工作台页面</a></li><li><a href="/developdoc/guide/document/form.html" class="sidebar-link">收据开具页面</a></li><li><a href="/developdoc/guide/document/table.html" class="sidebar-link">收据审核、查询、打印、收款页面</a></li><li><a href="/developdoc/guide/document/third-party-relies-on.html" class="sidebar-link">收据打印页面</a></li><li><a href="/developdoc/guide/document/routing-menu-permissions.html" class="sidebar-link">路由菜单权限控制</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="全局状态管理"><a href="#全局状态管理" class="header-anchor">#</a> 全局状态管理</h1> <p>在一款应用中通常会包含一些贯穿整个应用生命周期的变量信息，这些信息在应用中大多数地方可能都会被用到，比如当前用户信息、Local信息等。我们把需要全局共享的信息分为两类：全局变量和共享状态。全局变量就是单纯指会贯穿整个应用生命周期的变量，用于单纯的保存一些信息，或者封装一些全局工具和方法的对象。而共享状态则是指哪些需要跨组件或跨路由共享的信息，这些信息通常也是全局变量，而共享状态和全局变量的不同在于前者发生改变时需要通知所有使用该状态的组件，而后者不需要。为此，我们将全局变量和共享状态分开单独管理。</p> <h2 id="全局样式"><a href="#全局样式" class="header-anchor">#</a> 全局样式</h2> <p>在src目录下新建global.scss样式文件，然后在这个文件配置我们的全局样式：</p> <div class="language-scss extra-class"><pre class="language-scss"><code><span class="token selector">.flex-row </span><span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+  <span class="token property">flex-flow</span><span class="token punctuation">:</span> row nowrap<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.flex-column </span><span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+  <span class="token property">flex-flow</span><span class="token punctuation">:</span> column nowrap<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.flex-row-space-around </span><span class="token punctuation">{</span>
+  <span class="token keyword">@extend</span> .flex-row<span class="token punctuation">;</span>
+  <span class="token property">justify-content</span><span class="token punctuation">:</span> space-around<span class="token punctuation">;</span>
+  <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.flex-column-space-around </span><span class="token punctuation">{</span>
+  <span class="token keyword">@extend</span> .flex-column<span class="token punctuation">;</span>
+  <span class="token property">justify-content</span><span class="token punctuation">:</span> space-around<span class="token punctuation">;</span>
+  <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">注意</p> <p>这里我们使用的是sass，需要安装sass-loader、node-sass这两个开发依赖。</p> <p>运行<code>yarn add -D sass-loader node-sass</code>安装依赖即可</p></div> <p>在main.js引入我们的全局样式文件：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token string">'./global.scss'</span>
+</code></pre></div><h2 id="工具类"><a href="#工具类" class="header-anchor">#</a> 工具类</h2> <p>在src/utils/util.js文件里存放着所有常用的工具类，可以全局使用：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">timeFix</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> time <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> hour <span class="token operator">=</span> time<span class="token punctuation">.</span><span class="token function">getHours</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> hour <span class="token operator">&lt;</span> <span class="token number">9</span> <span class="token operator">?</span> <span class="token string">'早上好'</span> <span class="token operator">:</span> hour <span class="token operator">&lt;=</span> <span class="token number">11</span> <span class="token operator">?</span> <span class="token string">'上午好'</span> <span class="token operator">:</span> hour <span class="token operator">&lt;=</span> <span class="token number">13</span> <span class="token operator">?</span> <span class="token string">'中午好'</span> <span class="token operator">:</span> hour <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token operator">?</span> <span class="token string">'下午好'</span> <span class="token operator">:</span> <span class="token string">'晚上好'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">welcome</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'休息一会儿吧'</span><span class="token punctuation">,</span> <span class="token string">'准备吃什么呢?'</span><span class="token punctuation">,</span> <span class="token string">'要不要打一把 DOTA'</span><span class="token punctuation">,</span> <span class="token string">'我猜你可能累了'</span><span class="token punctuation">]</span>
+  <span class="token keyword">const</span> index <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> arr<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * 触发 window.resize
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">triggerWindowResizeEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> event <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createEvent</span><span class="token punctuation">(</span><span class="token string">'HTMLEvents'</span><span class="token punctuation">)</span>
+  event<span class="token punctuation">.</span><span class="token function">initEvent</span><span class="token punctuation">(</span><span class="token string">'resize'</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+  event<span class="token punctuation">.</span>eventType <span class="token operator">=</span> <span class="token string">'message'</span>
+  window<span class="token punctuation">.</span><span class="token function">dispatchEvent</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">handleScrollHeader</span><span class="token punctuation">(</span><span class="token parameter">callback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> timer <span class="token operator">=</span> <span class="token number">0</span>
+
+  <span class="token keyword">let</span> beforeScrollTop <span class="token operator">=</span> window<span class="token punctuation">.</span>pageYOffset
+  callback <span class="token operator">=</span> callback <span class="token operator">||</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span>
+    <span class="token string">'scroll'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span>
+      timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> direction <span class="token operator">=</span> <span class="token string">'up'</span>
+        <span class="token keyword">const</span> afterScrollTop <span class="token operator">=</span> window<span class="token punctuation">.</span>pageYOffset
+        <span class="token keyword">const</span> delta <span class="token operator">=</span> afterScrollTop <span class="token operator">-</span> beforeScrollTop
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>delta <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+        direction <span class="token operator">=</span> delta <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token string">'down'</span> <span class="token operator">:</span> <span class="token string">'up'</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span>direction<span class="token punctuation">)</span>
+        beforeScrollTop <span class="token operator">=</span> afterScrollTop
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token boolean">false</span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">isIE</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> bw <span class="token operator">=</span> window<span class="token punctuation">.</span>navigator<span class="token punctuation">.</span>userAgent
+  <span class="token keyword">const</span> <span class="token function-variable function">compare</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">s</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> bw<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token number">0</span>
+  <span class="token keyword">const</span> ie11 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token string">'ActiveXObject'</span> <span class="token keyword">in</span> window<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token function">compare</span><span class="token punctuation">(</span><span class="token string">'MSIE'</span><span class="token punctuation">)</span> <span class="token operator">||</span> ie11
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Remove loading animate
+ * @param id parent element id or class
+ * @param timeout
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">removeLoadingAnimate</span><span class="token punctuation">(</span>id <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">,</span> timeout <span class="token operator">=</span> <span class="token number">1500</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">===</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">removeChild</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> timeout<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * 判断对象是否为空
+ * @param {*} obj
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    obj <span class="token operator">===</span> <span class="token keyword">undefined</span> <span class="token operator">||</span>
+    obj <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span>
+    <span class="token punctuation">(</span><span class="token keyword">typeof</span> obj <span class="token operator">===</span> <span class="token string">'string'</span> <span class="token operator">&amp;&amp;</span> obj<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+    <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'{}'</span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">提示</p> <p>我们也可以把自己常用的工具类放到这里面方便使用</p></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/20/2020, 3:05:21 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/developdoc/guide/document/many-environment-configuration.html" class="prev">
+        多环境配置
+      </a></span> <span class="next"><a href="/developdoc/guide/document/network-request-package.html">
+        网络请求封装
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/developdoc/assets/js/app.5523110c.js" defer></script><script src="/developdoc/assets/js/2.823e1717.js" defer></script><script src="/developdoc/assets/js/11.7a1931d6.js" defer></script>
+  </body>
+</html>
