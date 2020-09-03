@@ -4,10 +4,8 @@ name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  release:
+    types: [ published ]
 
 jobs:
   build:
@@ -31,4 +29,4 @@ jobs:
         password: ${{ secrets.ACCESS_TOKEN }}
         registry: docker.pkg.github.com
         repository: ricardolsw/developdoc/developdoc
-        tags: latest
+        tag_with_ref: true
