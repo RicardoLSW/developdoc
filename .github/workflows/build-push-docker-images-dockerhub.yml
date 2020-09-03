@@ -1,0 +1,29 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: sed -i 's/\/developdoc\//\//g' `grep "\/developdoc\/" -rl docs/.vuepress/config.js`
+      - run: nl docs/.vuepress/config.js
+      - run: npm run docs:build
+
+      - name: Build and push Docker images to dockerhub
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ricardolsw
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: ricardolsw/developdoc/developdoc
+          tag_with_ref: true
