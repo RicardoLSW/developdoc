@@ -30,3 +30,10 @@ jobs:
         registry: docker.pkg.github.com
         repository: ricardolsw/developdoc/developdoc
         tag_with_ref: true
+    - name: Build and push Docker images
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ricardolsw
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: ricardolsw/developdoc/developdoc
+          tag_with_ref: true
