@@ -415,8 +415,6 @@ export default {
     }
   },
   mounted() {
-    const { userInfo } = this
-    console.log(userInfo())
     getReceiptTypePercentage().then((res) => {
       this.receiptCategoryAccountedFor = res.result.finRcptTypeDetailVoList
       this.receiptCategoryAccountedFor.forEach((e) => {
@@ -444,7 +442,6 @@ export default {
     })
   },
   methods: {
-    ...mapGetters(['userInfo']),
     /**
      * 绘制折线图
      * @param data
