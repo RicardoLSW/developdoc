@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>代码结构 | 前端开发规范&amp;文档</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/developdoc/favicon.ico">
+    <meta name="description" content="前端开发规范&文档">
+    <link rel="preload" href="/developdoc/assets/css/0.styles.ef384e93.css" as="style"><link rel="preload" href="/developdoc/assets/js/app.0ef85107.js" as="script"><link rel="preload" href="/developdoc/assets/js/2.416b7026.js" as="script"><link rel="preload" href="/developdoc/assets/js/8.fdb64087.js" as="script"><link rel="prefetch" href="/developdoc/assets/js/10.71768a4f.js"><link rel="prefetch" href="/developdoc/assets/js/11.71d24637.js"><link rel="prefetch" href="/developdoc/assets/js/12.aebaac81.js"><link rel="prefetch" href="/developdoc/assets/js/13.55eaab9b.js"><link rel="prefetch" href="/developdoc/assets/js/14.beeb2d7e.js"><link rel="prefetch" href="/developdoc/assets/js/15.3b17ec5e.js"><link rel="prefetch" href="/developdoc/assets/js/16.7736a91a.js"><link rel="prefetch" href="/developdoc/assets/js/17.0c57e85c.js"><link rel="prefetch" href="/developdoc/assets/js/18.22cd0e18.js"><link rel="prefetch" href="/developdoc/assets/js/19.7c120dfa.js"><link rel="prefetch" href="/developdoc/assets/js/3.1f893780.js"><link rel="prefetch" href="/developdoc/assets/js/4.9feeae3b.js"><link rel="prefetch" href="/developdoc/assets/js/5.fb165bb9.js"><link rel="prefetch" href="/developdoc/assets/js/6.1f79d78a.js"><link rel="prefetch" href="/developdoc/assets/js/7.ff826a3d.js"><link rel="prefetch" href="/developdoc/assets/js/9.7c267cf6.js">
+    <link rel="stylesheet" href="/developdoc/assets/css/0.styles.ef384e93.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/developdoc/" class="home-link router-link-active"><!----> <span class="site-name">前端开发规范&amp;文档</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>开发规范</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/developdoc/guide/specification/" class="sidebar-link">介绍</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Vue从零开始</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/developdoc/guide/document/introduction.html" class="sidebar-link">介绍</a></li><li><a href="/developdoc/guide/document/front-end-environment-set-up.html" class="sidebar-link">前端环境搭建</a></li><li><a href="/developdoc/guide/document/code-structure.html" aria-current="page" class="active sidebar-link">代码结构</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/developdoc/guide/document/code-structure.html#创建项目" class="sidebar-link">创建项目</a></li><li class="sidebar-sub-header"><a href="/developdoc/guide/document/code-structure.html#目录结构" class="sidebar-link">目录结构</a></li><li class="sidebar-sub-header"><a href="/developdoc/guide/document/code-structure.html#本地开发" class="sidebar-link">本地开发</a></li></ul></li><li><a href="/developdoc/guide/document/a-unified-code-style.html" class="sidebar-link">统一代码风格</a></li><li><a href="/developdoc/guide/document/many-environment-configuration.html" class="sidebar-link">多环境配置</a></li><li><a href="/developdoc/guide/document/global-state-management.html" class="sidebar-link">全局状态管理</a></li><li><a href="/developdoc/guide/document/network-request-package.html" class="sidebar-link">网络请求封装</a></li><li><a href="/developdoc/guide/document/chart.html" class="sidebar-link">工作台页面</a></li><li><a href="/developdoc/guide/document/form.html" class="sidebar-link">收据开具页面</a></li><li><a href="/developdoc/guide/document/table.html" class="sidebar-link">收据审核、查询、打印、收款页面</a></li><li><a href="/developdoc/guide/document/third-party-relies-on.html" class="sidebar-link">收据打印页面</a></li><li><a href="/developdoc/guide/document/routing-menu-permissions.html" class="sidebar-link">路由菜单权限控制</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="代码结构"><a href="#代码结构" class="header-anchor">#</a> 代码结构</h1> <p>依据原型图，可以使用一款现有的框架<a href="https://pro.antdv.com/docs/getting-started" target="_blank" rel="noopener noreferrer">Ant Design Pro<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>，这是一款比较容易上手的企业级中后台前端/设计解决方案，它基于<a href="https://pro.antdv.com/docs/getting-started" target="_blank" rel="noopener noreferrer">Ant Design Pro<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>并提供了一些常用的模板、组件，可以帮助你快速搭建企业级中后台产品原型。</p> <h2 id="创建项目"><a href="#创建项目" class="header-anchor">#</a> 创建项目</h2> <p>从 GitHub 仓库中直接安装最新的脚手架代码。</p> <div class="language-shell extra-class"><pre class="language-shell"><code>$ <span class="token function">git</span> clone --depth<span class="token operator">=</span><span class="token number">1</span> https://github.com/vueComponent/ant-design-vue-pro.git electronic-receipt-system
+$ <span class="token builtin class-name">cd</span> electronic-receipt-system
+</code></pre></div><h2 id="目录结构"><a href="#目录结构" class="header-anchor">#</a> 目录结构</h2> <p>该框架已经为我们生成好了一套完整的开发框架，提供了涵盖中后台开发的各类功能和坑位，下面是整个项目的目录结构。</p> <div class="language- extra-class"><pre class="language-text"><code>├── public
+│   └── logo.png             # LOGO
+|   └── index.html           # Vue 入口模板
+├── src
+│   ├── api                  # Api ajax 等
+│   ├── assets               # 本地静态资源
+│   ├── config               # 项目基础配置，包含路由，全局设置
+│   ├── components           # 业务通用组件
+│   ├── core                 # 项目引导, 全局配置初始化，依赖包引入等
+│   ├── router               # Vue-Router
+│   ├── store                # Vuex
+│   ├── utils                # 工具库
+│   ├── locales              # 国际化资源
+│   ├── views                # 业务页面入口和常用模板
+│   ├── App.vue              # Vue 模板入口
+│   └── main.js              # Vue 入口 JS
+│   └── permission.js        # 路由守卫(路由权限控制)
+│   └── global.less          # 全局样式
+├── tests                    # 测试工具
+├── README.md
+└── package.json
+</code></pre></div><h2 id="本地开发"><a href="#本地开发" class="header-anchor">#</a> 本地开发</h2> <p>安装依赖。</p> <div class="language-shell extra-class"><pre class="language-shell"><code>$ <span class="token function">yarn</span> <span class="token function">install</span>
+</code></pre></div><blockquote><p>如果网络情况不好，可以使用<code>cnpm</code></p></blockquote> <div class="language-shell extra-class"><pre class="language-shell"><code>$ <span class="token function">yarn</span> run serve
+</code></pre></div><p>启动完成后会自动打开浏览器访问<a href="http://localhost:8000" target="_blank" rel="noopener noreferrer">http://localhost:8000<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <p><img src="https://figure-b.ricardolsw.com/image/fehelper-localhost-8000-user-login-1596588154057.png" alt="fehelper-localhost-8000-user-login-1596588154057"></p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">9/3/2020, 1:38:21 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/developdoc/guide/document/front-end-environment-set-up.html" class="prev">
+        前端环境搭建
+      </a></span> <span class="next"><a href="/developdoc/guide/document/a-unified-code-style.html">
+        统一代码风格
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/developdoc/assets/js/app.0ef85107.js" defer></script><script src="/developdoc/assets/js/2.416b7026.js" defer></script><script src="/developdoc/assets/js/8.fdb64087.js" defer></script>
+  </body>
+</html>
