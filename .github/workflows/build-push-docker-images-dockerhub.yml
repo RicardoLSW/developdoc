@@ -25,5 +25,5 @@ jobs:
         with:
           username: ricardolsw
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: ricardolsw/developdoc/developdoc
+          repository: ricardolsw/developdoc
           tag_with_ref: true
