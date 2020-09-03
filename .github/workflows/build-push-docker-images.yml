@@ -22,7 +22,7 @@ jobs:
     - run: nl docs/.vuepress/config.js
     - run: npm run docs:build
 
-    - name: Build and push Docker images
+    - name: Build and push Docker images to github
       uses: docker/build-push-action@v1.1.0
       with:
         username: ricardolsw
@@ -30,10 +30,10 @@ jobs:
         registry: docker.pkg.github.com
         repository: ricardolsw/developdoc/developdoc
         tag_with_ref: true
-    - name: Build and push Docker images
-        uses: docker/build-push-action@v1.1.0
-        with:
-          username: ricardolsw
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: ricardolsw/developdoc/developdoc
-          tag_with_ref: true
+    - name: Build and push Docker images to dockerhub
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ricardolsw
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: ricardolsw/developdoc/developdoc
+        tag_with_ref: true
